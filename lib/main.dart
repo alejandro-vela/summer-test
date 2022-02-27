@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+import 'global_locator.dart';
+import 'src/pages/home/home.dart';
+import 'src/utils/routes/routes.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  setUpGlobalLocator();
 
-class MyApp extends StatelessWidget {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(SummerTestApp());
+}
+
+class SummerTestApp extends StatelessWidget {
+  const SummerTestApp();
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
+  // ignore: prefer_const_constructors
+  Widget build(BuildContext context) => Sizer(
+        builder: (context, orientation, deviceType) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: HomeScreen.routeName,
+          routes: routes,
         ),
-        body: Center(
-          child: SizedBox(
-            child: Text('Hello World'),
-          ),
-        ),
-      ),
-    );
-  }
+      );
 }
