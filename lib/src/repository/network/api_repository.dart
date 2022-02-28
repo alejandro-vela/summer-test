@@ -4,37 +4,39 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 import 'package:summer_test/src/repository/network/shared_configuration.dart';
-import 'package:summer_test/src/utils/lang/type_safety.dart';
 
 import '../../../global_locator.dart';
 import 'endpoint.dart';
 
 abstract class APIRepository {
-  Future<Map<String, dynamic>> request({required Endpoint endpoint});
+  Future<Response> request({required Endpoint endpoint});
 }
 
 class DefaultAPIRepository implements APIRepository {
   final _logger = global<Logger>();
 
   @override
-  Future<Map<String, dynamic>> request({required Endpoint endpoint}) async {
+  Future<Response> request({required Endpoint endpoint}) async {
     _logger.d('Request endpoint: $endpoint');
 
     final url = Uri.https(
-        SharedConfiguration.network.baseUrlDevelopment, endpoint.path);
+      SharedConfiguration.network.baseUrlDevelopment,
+      endpoint.path,
+      endpoint.queryParameters,
+    );
 
     var headers = {...SharedConfiguration.network.headers};
     headers.addAll(endpoint.headers);
 
     switch (endpoint.method) {
       case Method.get:
-        return _get(url, headers).then(_handleResponse);
+        return _get(url, headers);
       case Method.post:
-        return _post(url, headers, endpoint.parameters).then(_handleResponse);
+        return _post(url, headers, endpoint.parameters);
       case Method.put:
-        return _put(url, headers, endpoint.parameters).then(_handleResponse);
+        return _put(url, headers, endpoint.parameters);
       case Method.delete:
-        return _delete(url, headers, endpoint.parameters).then(_handleResponse);
+        return _delete(url, headers, endpoint.parameters);
     }
   }
 
@@ -62,19 +64,5 @@ class DefaultAPIRepository implements APIRepository {
     _logger.d('delete() with url ($url) - headers ($headers) - body ($body)');
     return http.delete(url,
         headers: headers, body: jsonEncode(body), encoding: Utf8Codec());
-  }
-
-  Map<String, dynamic> _handleResponse(Response response) {
-    _logger.d('Response - statusCode: ${response.statusCode}');
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      final decodedBody = json.decode(response.body);
-      _logger.d('Response - body: $decodedBody');
-      final map = cast<Map<String, dynamic>>(decodedBody);
-      _logger.d('Response - body map: $map');
-      if (map != null) return map;
-    }
-    _logger.d('Response error');
-
-    throw Exception('Error with http code ${response.statusCode}');
   }
 }

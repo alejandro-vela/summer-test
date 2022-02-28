@@ -7,6 +7,8 @@ abstract class Endpoint {
 
   Map<String, dynamic> parameters = {};
 
+  Map<String, dynamic> queryParameters = {};
+
   Map<String, String> headers = {};
 
   Endpoint();
