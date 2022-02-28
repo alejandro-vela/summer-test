@@ -55,7 +55,6 @@ class Datum {
     required this.images,
     required this.user,
     required this.analyticsResponsePayload,
-    required this.analytics,
   });
 
   String type;
@@ -78,7 +77,6 @@ class Datum {
   Images images;
   User user;
   String analyticsResponsePayload;
-  Analytics analytics;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         type: json['type'],
@@ -101,7 +99,6 @@ class Datum {
         images: Images.fromJson(json['images']),
         user: json['user'],
         analyticsResponsePayload: json['analytics_response_payload'],
-        analytics: Analytics.fromJson(json['analytics']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -125,31 +122,6 @@ class Datum {
         'images': images.toJson(),
         'user': user,
         'analytics_response_payload': analyticsResponsePayload,
-        'analytics': analytics.toJson(),
-      };
-}
-
-class Analytics {
-  Analytics({
-    required this.onload,
-    required this.onclick,
-    required this.onsent,
-  });
-
-  Onclick onload;
-  Onclick onclick;
-  Onclick onsent;
-
-  factory Analytics.fromJson(Map<String, dynamic> json) => Analytics(
-        onload: Onclick.fromJson(json['onload']),
-        onclick: Onclick.fromJson(json['onclick']),
-        onsent: Onclick.fromJson(json['onsent']),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'onload': onload.toJson(),
-        'onclick': onclick.toJson(),
-        'onsent': onsent.toJson(),
       };
 }
 

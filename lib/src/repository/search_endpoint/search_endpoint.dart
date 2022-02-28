@@ -1,9 +1,9 @@
 import 'package:summer_test/src/repository/network/endpoint.dart';
 import 'package:summer_test/src/utils/constants/constants.dart';
 
-class TipEndpoint extends Endpoint {
+class SearchEndpoint extends Endpoint {
   final String toSearch;
-  TipEndpoint({required this.toSearch});
+  SearchEndpoint({required this.toSearch});
 
   @override
   Method get method => Method.get;
