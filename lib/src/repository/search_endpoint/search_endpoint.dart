@@ -9,6 +9,16 @@ class SearchEndpoint extends Endpoint {
   Method get method => Method.get;
 
   @override
-  String get path =>
-      '/search?api_key=$apiToken&q=$toSearch&limit=25&offset=0&rating=pg-13&lang=en';
+  Map<String, dynamic> get queryParameters => {
+        'q': 'Hello',
+        'page': '1',
+        'per_page': '25',
+        'api_key': apiToken,
+        'offset': '0',
+        'rating': 'pg-13',
+        'lang': 'en'
+      };
+
+  @override
+  String get path => '/v1/gifs/search';
 }

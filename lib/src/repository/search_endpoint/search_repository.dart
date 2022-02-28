@@ -20,6 +20,8 @@ class GifRepositoryDefault implements GifRepository {
       SearchEndpoint endpoint = SearchEndpoint(toSearch: toSearch);
       Response response = await apiRepository.request(endpoint: endpoint);
       if (response.statusCode == 200) {
+        _logger
+            .i('GifRepositoryDefault: getGif: response.body: ${response.body}');
         SearchResponse data = searchResponseFromJson(response.body);
         return data;
       } else {

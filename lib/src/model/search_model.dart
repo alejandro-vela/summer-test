@@ -53,7 +53,6 @@ class Datum {
     required this.importDatetime,
     required this.trendingDatetime,
     required this.images,
-    required this.user,
     required this.analyticsResponsePayload,
   });
 
@@ -75,7 +74,6 @@ class Datum {
   String importDatetime;
   String trendingDatetime;
   Images images;
-  User user;
   String analyticsResponsePayload;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -97,7 +95,6 @@ class Datum {
         importDatetime: json['import_datetime'],
         trendingDatetime: json['trending_datetime'],
         images: Images.fromJson(json['images']),
-        user: json['user'],
         analyticsResponsePayload: json['analytics_response_payload'],
       );
 
@@ -120,7 +117,6 @@ class Datum {
         'import_datetime': importDatetime,
         'trending_datetime': trendingDatetime,
         'images': images.toJson(),
-        'user': user,
         'analytics_response_payload': analyticsResponsePayload,
       };
 }
@@ -161,12 +157,9 @@ class Images {
     required this.fixedWidthStill,
     required this.looping,
     required this.originalStill,
-    required this.originalMp4,
     required this.preview,
     required this.previewGif,
-    required this.previewWebp,
     required this.the480WStill,
-    required this.hd,
   });
 
   Original original;
@@ -187,12 +180,10 @@ class Images {
   DownsizedLarge fixedWidthStill;
   Looping looping;
   DownsizedLarge originalStill;
-  OriginalMp4 originalMp4;
+
   DownsizedSmall preview;
   Downsized previewGif;
-  PreviewWebp previewWebp;
   The480WStill the480WStill;
-  OriginalMp4 hd;
 
   factory Images.fromJson(Map<String, dynamic> json) => Images(
         original: Original.fromJson(json['original']),
@@ -217,12 +208,9 @@ class Images {
         fixedWidthStill: DownsizedLarge.fromJson(json['fixed_width_still']),
         looping: Looping.fromJson(json['looping']),
         originalStill: DownsizedLarge.fromJson(json['original_still']),
-        originalMp4: OriginalMp4.fromJson(json['original_mp4']),
         preview: DownsizedSmall.fromJson(json['preview']),
         previewGif: Downsized.fromJson(json['preview_gif']),
-        previewWebp: json['preview_webp'],
         the480WStill: The480WStill.fromJson(json['480w_still']),
-        hd: json['hd'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -244,12 +232,9 @@ class Images {
         'fixed_width_still': fixedWidthStill.toJson(),
         'looping': looping.toJson(),
         'original_still': originalStill.toJson(),
-        'original_mp4': originalMp4.toJson(),
         'preview': preview.toJson(),
         'preview_gif': previewGif.toJson(),
-        'preview_webp': previewWebp,
         '480w_still': the480WStill.toJson(),
-        'hd': hd,
       };
 }
 
@@ -659,58 +644,6 @@ class The480WStill {
         'width': width,
         'size': size,
         'url': url,
-      };
-}
-
-class User {
-  User({
-    required this.avatarUrl,
-    required this.bannerImage,
-    required this.bannerUrl,
-    required this.profileUrl,
-    required this.username,
-    required this.displayName,
-    required this.description,
-    required this.instagramUrl,
-    required this.websiteUrl,
-    required this.isVerified,
-  });
-
-  String avatarUrl;
-  String bannerImage;
-  String bannerUrl;
-  String profileUrl;
-  String username;
-  String displayName;
-  String description;
-  String instagramUrl;
-  String websiteUrl;
-  bool isVerified;
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        avatarUrl: json['avatar_url'],
-        bannerImage: json['banner_image'],
-        bannerUrl: json['banner_url'],
-        profileUrl: json['profile_url'],
-        username: json['username'],
-        displayName: json['display_name'],
-        description: json['description'],
-        instagramUrl: json['instagram_url'],
-        websiteUrl: json['website_url'],
-        isVerified: json['is_verified'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'avatar_url': avatarUrl,
-        'banner_image': bannerImage,
-        'banner_url': bannerUrl,
-        'profile_url': profileUrl,
-        'username': username,
-        'display_name': displayName,
-        'description': description,
-        'instagram_url': instagramUrl,
-        'website_url': websiteUrl,
-        'is_verified': isVerified,
       };
 }
 
