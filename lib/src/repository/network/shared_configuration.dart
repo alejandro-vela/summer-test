@@ -12,5 +12,5 @@ class Network {
     HttpHeaders.contentTypeHeader: 'application/json',
   };
   //TODO IMPLEMENTAR URL
-  final String baseUrlDevelopment = '';
+  final String baseUrlDevelopment = 'https://api.giphy.com/v1/gifs';
 }
