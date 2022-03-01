@@ -8,6 +8,7 @@ import '../../../global_locator.dart';
 
 abstract class GifRepository {
   Future<SearchResponse?> getGif({required String toSearch});
+  Future<List<Datum>?> getAllGifs();
 }
 
 class GifRepositoryDefault implements GifRepository {
@@ -24,6 +25,26 @@ class GifRepositoryDefault implements GifRepository {
             .i('GifRepositoryDefault: getGif: response.body: ${response.body}');
         SearchResponse data = searchResponseFromJson(response.body);
         return data;
+      } else {
+        _logger.e('Error: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      _logger.e(e);
+      return null;
+    }
+  }
+
+  @override
+  Future<List<Datum>?> getAllGifs() async {
+    try {
+      AllGifsEndpoint endpoint = AllGifsEndpoint();
+      Response response = await apiRepository.request(endpoint: endpoint);
+      if (response.statusCode == 200) {
+        _logger.wtf(
+            'GifRepositoryDefault: getAllGifs: response.body: ${response.body}');
+        SearchResponse data = searchResponseFromJson(response.body);
+        return data.data;
       } else {
         _logger.e('Error: ${response.statusCode}');
         return null;

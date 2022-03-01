@@ -14,6 +14,11 @@ class HasSearchState extends SearchState {
   const HasSearchState({required this.searchResponse});
 }
 
+class AllGifsState extends SearchState {
+  final List<Datum> gifs;
+  const AllGifsState({required this.gifs});
+}
+
 class FinishWithError extends SearchState {
   final String error;
 

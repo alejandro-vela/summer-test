@@ -15,19 +15,37 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   @override
   Stream<SearchState> mapEventToState(SearchEvent event) async* {
-    if (event is SearchGif) {
+    if (event is SearchGifEvent) {
       yield* _searchToState(event);
+    } else if (event is GetAllGifsEvent) {
+      yield* _getAllGifsToState();
     } else if (event is NoneEvent) {
       yield NoneState();
     }
   }
 
-  Stream<SearchState> _searchToState(SearchGif event) async* {
+  Stream<SearchState> _searchToState(SearchGifEvent event) async* {
     try {
       var response = await gifRepository.getGif(toSearch: event.toSearch);
 
       if (response != null) {
         yield HasSearchState(searchResponse: response);
+      } else {
+        yield FinishWithError(
+            error: 'Tenemos problemas para obtener el gif, intenta mas tarde');
+      }
+    } catch (e) {
+      yield FinishWithError(
+          error: 'Tenemos problemas para obtener el gif, intenta mas tarde');
+    }
+  }
+
+  Stream<SearchState> _getAllGifsToState() async* {
+    try {
+      var response = await gifRepository.getAllGifs();
+
+      if (response != null) {
+        yield AllGifsState(gifs: response);
       } else {
         yield FinishWithError(
             error:

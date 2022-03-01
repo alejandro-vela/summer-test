@@ -9,7 +9,9 @@ abstract class SearchEvent extends Equatable {
 
 class NoneEvent extends SearchEvent {}
 
-class SearchGif extends SearchEvent {
+class SearchGifEvent extends SearchEvent {
   final String toSearch;
-  const SearchGif({required this.toSearch});
+  const SearchGifEvent({required this.toSearch});
 }
+
+class GetAllGifsEvent extends SearchEvent {}
